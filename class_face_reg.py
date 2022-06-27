@@ -153,3 +153,20 @@ class Face_reg():
             'face_reg': face_detection_lst
             }
         return ret_dict
+
+    def get_face_in_image(self, img_path):
+        frame = cv2.imread(img_path)
+        info = self.search_face(frame)
+
+        if len(info) == 0:
+            return 0
+        else:
+            for i in info:
+                if i is not None:
+                    return 1
+        return 0
+
+    def predict_video_frames(self, frames_folder_path):
+        frame_lst = os.listdir(frames_folder_path)
+
+        return np.max(list(map(lambda image_name: self.get_face_in_image(frames_folder_path + '/' + image_name), frame_lst)))

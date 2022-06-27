@@ -41,3 +41,8 @@ class Text_CLF():
         feature_vector = self.TfidfVectorizer.transform([preprocessed_text])
         return self.clf.predict(feature_vector)[0]
 
+    def predict_score(self, text):
+        preprocessed_text = preprocess_text(text)
+        feature_vector = self.TfidfVectorizer.transform([preprocessed_text])
+        return self.clf.predict_proba(feature_vector)[:,1][0]
+
